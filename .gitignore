@@ -1,0 +1,10 @@
+venv/
+backend/ai-service/venv/
+
+node_modules/
+.env
+dist/
+build/
+
+frontend/node_modules/
+backend/node_modules/
