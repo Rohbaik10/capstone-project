@@ -86,12 +86,60 @@ User berinteraksi melalui aplikasi Frontend React.js yang terhubung ke Backend N
 
 * PostgreSQL
 
-### Artificial Intelligence
+### Artificial Intelligence & Data Science
 
 * Python
 * Flask
 * TensorFlow
 * Keras
+* Machine Learning Classification Model
+* Transaction Categorization System
+* Natural Language Processing (NLP)
+
+---
+
+## Data Science Implementation
+
+Project ini mengimplementasikan Machine Learning untuk melakukan klasifikasi kategori transaksi secara otomatis berdasarkan deskripsi transaksi yang dimasukkan oleh pengguna.
+
+### AI Workflow
+
+```text
+User Input
+    ↓
+Frontend React
+    ↓
+Backend Express
+    ↓
+AI Service Flask
+    ↓
+TensorFlow/Keras Model
+    ↓
+Predicted Category
+    ↓
+PostgreSQL Database
+```
+
+### Supported Categories
+
+* makanan
+* minuman
+* transportasi
+* tagihan
+* hiburan
+* belanja
+* topup
+* lainnya
+
+### Prediction Example
+
+| Transaction Input | Predicted Category |
+| ----------------- | ------------------ |
+| beli nasi goreng  | makanan            |
+| bayar listrik     | tagihan            |
+| isi bensin        | transportasi       |
+| topup dana        | topup              |
+| beli kopi         | minuman            |
 
 ---
 
@@ -168,7 +216,7 @@ cd backend/ai-service
 python app.py
 ```
 
-AI Service akan berjalan pada:
+AI Service berjalan pada:
 
 ```text
 http://localhost:5001
@@ -181,7 +229,7 @@ cd backend
 npm run dev
 ```
 
-Backend akan berjalan pada:
+Backend berjalan pada:
 
 ```text
 http://localhost:5000
@@ -194,44 +242,10 @@ cd frontend
 npm run dev
 ```
 
-Frontend akan berjalan pada:
+Frontend berjalan pada:
 
 ```text
 http://localhost:5173
-```
-
----
-
-## Artificial Intelligence Integration
-
-Fitur AI digunakan untuk melakukan kategorisasi transaksi secara otomatis berdasarkan deskripsi transaksi yang dimasukkan pengguna.
-
-Contoh:
-
-| Input Transaksi  | Hasil Kategori |
-| ---------------- | -------------- |
-| beli nasi goreng | makanan        |
-| bayar listrik    | tagihan        |
-| isi bensin       | transportasi   |
-| topup dana       | topup          |
-| beli kopi        | minuman        |
-
-Alur proses:
-
-```text
-User Input
-    ↓
-Frontend React
-    ↓
-Backend Express
-    ↓
-AI Service Flask
-    ↓
-TensorFlow Model
-    ↓
-Predicted Category
-    ↓
-PostgreSQL Database
 ```
 
 ---
@@ -244,9 +258,15 @@ Coding Camp 2026 Capstone Project
 
 ---
 
-## Version
+## Release
 
-Current Release: **v1.0**
+Current Stable Version: **v1.0**
+
+Git Tag:
+
+```bash
+v1.0
+```
 
 ---
 
