@@ -462,95 +462,102 @@ function Savings() {
 
         </div>
 
-        {/* HISTORY */}
-        <div style={cardStyle}>
+{/* HISTORY */}
+<div style={cardStyle}>
 
-          <h2>
-            Riwayat
-          </h2>
+  <h2>
+    Riwayat
+  </h2>
 
-          {history.length ===
-          0 ? (
+  {history.length === 0 ? (
 
-            <p
-              style={{
-                color:
-                  "#64748b",
-              }}
-            >
-              Belum ada aktivitas
-            </p>
+    <p
+      style={{
+        color: "#64748b",
+      }}
+    >
+      Belum ada aktivitas
+    </p>
 
-          ) : (
+  ) : (
 
-            (showAllHistory
-              ? history
-              : history.slice(0, 3)
-            ).map(
-              (
-                item,
-                index
-              ) => (
+    (showAllHistory
+      ? history
+      : history.slice(0, 3)
+    ).map(
+      (item, index) => (
 
-                <div
-                  key={
-                    index
-                  }
-                  style={{
-                    marginTop:
-                      "15px",
-                    borderBottom:
-                      "1px solid #eee",
-                    paddingBottom:
-                      "10px",
-                  }}
-                >
+        <div
+          key={index}
+          style={{
+            marginTop: "15px",
+            borderBottom: "1px solid #eee",
+            paddingBottom: "10px",
+          }}
+        >
 
-                  <strong>
-                    {
-                      item.tipe
-                    }
-                  </strong>
+          <strong
+            style={{
+              color:
+                (item.type || item.tipe) === "setor"
+                  ? "#16a34a"
+                  : "#dc2626",
+            }}
+          >
+            {(
+              item.type ||
+              item.tipe ||
+              "-"
+            ).toUpperCase()}
+          </strong>
 
-                  <p>
-                    Rp{" "}
-                    {formatRupiah(
-                      item.jumlah
-                    )}
-                  </p>
+          <p>
+            Rp{" "}
+            {formatRupiah(
+              item.jumlah
+            )}
+          </p>
 
-                </div>
-
-              )
-            )
-
-          )}
-
-          {history.length > 3 && (
-
-            <button
-              onClick={() =>
-                setShowAllHistory(
-                  !showAllHistory
-                )
-              }
-              style={{
-                marginTop: "15px",
-                background: "none",
-                border: "none",
-                color: "#2563eb",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
-            >
-              {showAllHistory
-                ? "Tampilkan Sedikit"
-                : "Lihat Lainnya"}
-            </button>
-
-          )}
+          <small
+            style={{
+              color: "#64748b",
+            }}
+          >
+            {item.tanggal}
+          </small>
 
         </div>
+
+      )
+    )
+
+  )}
+
+  {history.length > 3 && (
+
+    <button
+      onClick={() =>
+        setShowAllHistory(
+          !showAllHistory
+        )
+      }
+      style={{
+        marginTop: "15px",
+        background: "none",
+        border: "none",
+        color: "#2563eb",
+        cursor: "pointer",
+        fontWeight: "bold",
+      }}
+    >
+      {showAllHistory
+        ? "Tampilkan Sedikit"
+        : "Lihat Lainnya"}
+    </button>
+
+  )}
+
+</div>
 
       </div>
 

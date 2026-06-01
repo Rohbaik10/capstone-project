@@ -4,43 +4,30 @@ const pool = require("../config/db");
    TAMBAH TABUNGAN
 ========================= */
 const createSavings = async (req, res) => {
-
   try {
+    const { user_id, target } = req.body;
 
-    const {
-      user_id,
-      target,
-    } = req.body;
-
-    const result =
-      await pool.query(
-        `
-        INSERT INTO savings
-        (
-          user_id,
-          target,
-          saldo
-        )
-
-        VALUES ($1, $2, $3)
-
-        RETURNING *
-        `,
-        [
-          user_id,
-          target,
-          0,
-        ]
-      );
+    const result = await pool.query(
+      `
+      INSERT INTO savings
+      (
+        user_id,
+        target,
+        saldo
+      )
+      VALUES ($1, $2, $3)
+      RETURNING *
+      `,
+      [
+        user_id,
+        target,
+        0,
+      ]
+    );
 
     res.status(201).json({
-
-      message:
-        "Tabungan berhasil dibuat",
-
-      saving:
-        result.rows[0],
-
+      message: "Tabungan berhasil dibuat",
+      saving: result.rows[0],
     });
 
   } catch (error) {
@@ -48,10 +35,7 @@ const createSavings = async (req, res) => {
     console.log(error);
 
     res.status(500).json({
-
-      error:
-        "Gagal membuat tabungan",
-
+      error: "Gagal membuat tabungan",
     });
 
   }
@@ -61,37 +45,29 @@ const createSavings = async (req, res) => {
    GET SAVINGS
 ========================= */
 const getSavings = async (req, res) => {
-
   try {
 
-    const { user_id } =
-      req.params;
+    const { user_id } = req.params;
 
-    const result =
-      await pool.query(
-        `
-        SELECT * FROM savings
-
-        WHERE user_id = $1
-
-        ORDER BY created_at DESC
-
-        LIMIT 1
-        `,
-        [user_id]
-      );
-
-    res.json(
-      result.rows
+    const result = await pool.query(
+      `
+      SELECT *
+      FROM savings
+      WHERE user_id = $1
+      ORDER BY created_at DESC
+      LIMIT 1
+      `,
+      [user_id]
     );
+
+    res.json(result.rows);
 
   } catch (error) {
 
     console.log(error);
 
     res.status(500).json({
-      error:
-        "Gagal mengambil tabungan",
+      error: "Gagal mengambil tabungan",
     });
 
   }
@@ -101,42 +77,30 @@ const getSavings = async (req, res) => {
    GET HISTORY
 ========================= */
 const getHistory = async (req, res) => {
-
   try {
 
-    const { user_id } =
-      req.params;
+    const { user_id } = req.params;
 
-    const result =
-      await pool.query(
-        `
-        SELECT sh.*
-
-        FROM savings_history sh
-
-        JOIN savings s
-        ON sh.saving_id = s.id
-
-        WHERE s.user_id = $1
-
-        ORDER BY sh.id DESC
-        `,
-        [user_id]
-      );
-
-    res.json(
-      result.rows
+    const result = await pool.query(
+      `
+      SELECT sh.*
+      FROM savings_history sh
+      JOIN savings s
+      ON sh.saving_id = s.id
+      WHERE s.user_id = $1
+      ORDER BY sh.id DESC
+      `,
+      [user_id]
     );
+
+    res.json(result.rows);
 
   } catch (error) {
 
     console.log(error);
 
     res.status(500).json({
-
-      error:
-        "Gagal mengambil history",
-
+      error: "Gagal mengambil history",
     });
 
   }
@@ -146,11 +110,9 @@ const getHistory = async (req, res) => {
    UPDATE SAVINGS
 ========================= */
 const updateSavings = async (req, res) => {
-
   try {
 
-    const { id } =
-      req.params;
+    const { id } = req.params;
 
     const {
       tipe,
@@ -161,79 +123,56 @@ const updateSavings = async (req, res) => {
     /* =========================
        UPDATE TARGET
     ========================= */
-    if (target) {
+    if (target !== undefined) {
 
-      const updatedTarget =
-        await pool.query(
-          `
-          UPDATE savings
-
-          SET target = $1
-
-          WHERE id = $2
-
-          RETURNING *
-          `,
-          [
-            target,
-            id,
-          ]
-        );
+      const updatedTarget = await pool.query(
+        `
+        UPDATE savings
+        SET target = $1
+        WHERE id = $2
+        RETURNING *
+        `,
+        [
+          target,
+          id,
+        ]
+      );
 
       return res.json({
-
-        message:
-          "Target berhasil diupdate",
-
-        saving:
-          updatedTarget.rows[0],
-
+        message: "Target berhasil diupdate",
+        saving: updatedTarget.rows[0],
       });
+
     }
 
     /* =========================
        GET SAVING
     ========================= */
-    const savingResult =
-      await pool.query(
-        `
-        SELECT *
-        FROM savings
+    const savingResult = await pool.query(
+      `
+      SELECT *
+      FROM savings
+      WHERE id = $1
+      `,
+      [id]
+    );
 
-        WHERE id = $1
-        `,
-        [id]
-      );
-
-    if (
-      savingResult.rows.length === 0
-    ) {
-
+    if (savingResult.rows.length === 0) {
       return res.status(404).json({
-
-        error:
-          "Tabungan tidak ditemukan",
-
+        error: "Tabungan tidak ditemukan",
       });
-
     }
 
-    const saving =
-      savingResult.rows[0];
+    const saving = savingResult.rows[0];
 
-    let saldoBaru =
-      Number(saving.saldo);
-
-    const nominal =
-      Number(jumlah);
+    let saldoBaru = Number(saving.saldo);
+    const nominal = Number(jumlah);
 
     /* =========================
        SETOR
     ========================= */
     if (tipe === "setor") {
-
       saldoBaru += nominal;
-
     }
 
     /* =========================
@@ -241,42 +180,36 @@ const updateSavings = async (req, res) => {
     ========================= */
     else if (tipe === "tarik") {
 
-      if (
-        nominal > saldoBaru
-      ) {
-
+      if (nominal > saldoBaru) {
         return res.status(400).json({
-
-          error:
-            "Saldo tidak cukup",
-
+          error: "Saldo tidak cukup",
         });
-
       }
 
       saldoBaru -= nominal;
+    }
 
+    else {
+      return res.status(400).json({
+        error: "Tipe transaksi tidak valid",
+      });
     }
 
     /* =========================
        UPDATE SALDO
     ========================= */
-    const updated =
-      await pool.query(
-        `
-        UPDATE savings
-
-        SET saldo = $1
-
-        WHERE id = $2
-
-        RETURNING *
-        `,
-        [
-          saldoBaru,
-          id,
-        ]
-      );
+    const updated = await pool.query(
+      `
+      UPDATE savings
+      SET saldo = $1
+      WHERE id = $2
+      RETURNING *
+      `,
+      [
+        saldoBaru,
+        id,
+      ]
+    );
 
     /* =========================
        SAVE HISTORY
@@ -286,27 +219,22 @@ const updateSavings = async (req, res) => {
       INSERT INTO savings_history
       (
         saving_id,
-        tipe,
-        jumlah
+        type,
+        jumlah,
+        tanggal
       )
-
-      VALUES ($1, $2, $3)
+      VALUES ($1, $2, $3, CURRENT_DATE)
       `,
       [
-        id,
+        Number(id),
         tipe,
         nominal,
       ]
     );
 
     res.json({
-
-      message:
-        "Saldo berhasil diupdate",
-
-      saving:
-        updated.rows[0],
-
+      message: "Saldo berhasil diupdate",
+      saving: updated.rows[0],
     });
 
   } catch (error) {
@@ -314,10 +242,8 @@ const updateSavings = async (req, res) => {
     console.log(error);
 
     res.status(500).json({
-
-      error:
-        "Gagal update saldo",
-
+      error: "Gagal update saldo",
+      detail: error.message,
     });
 
   }
