@@ -1,6 +1,22 @@
 # Smart Financial Assistant
 
-Smart Financial Assistant adalah aplikasi pengelolaan keuangan pribadi berbasis web yang membantu pengguna mencatat pemasukan dan pengeluaran, memantau kondisi keuangan, mengelola target tabungan, serta melakukan kategorisasi transaksi secara otomatis menggunakan Artificial Intelligence (AI).
+Smart Financial Assistant is a web-based personal finance management application that helps users record income and expenses, monitor financial conditions, manage savings goals, and automatically categorize transactions using Artificial Intelligence (AI).
+
+---
+
+## Live Demo
+
+### Frontend (Vercel)
+
+https://capstone-project-five-fawn.vercel.app/
+
+### Backend API (Railway)
+
+https://capstone-project-production-9c31.up.railway.app/
+
+### GitHub Repository
+
+https://github.com/Rohbaik10/capstone-project
 
 ---
 
@@ -20,7 +36,7 @@ Smart Financial Assistant adalah aplikasi pengelolaan keuangan pribadi berbasis 
 
 ## System Architecture
 
-User berinteraksi melalui aplikasi Frontend React.js yang terhubung ke Backend Node.js + Express.js. Backend mengelola data pada PostgreSQL dan berkomunikasi dengan AI Service berbasis Flask + TensorFlow untuk melakukan kategorisasi transaksi secara otomatis.
+Users interact through the React.js Frontend application which communicates with the Node.js + Express.js Backend. The Backend manages data stored in Neon PostgreSQL and communicates with the AI Service built using Flask + TensorFlow to automatically categorize transactions.
 
 ### Architecture Diagram
 
@@ -84,7 +100,7 @@ User berinteraksi melalui aplikasi Frontend React.js yang terhubung ke Backend N
 
 ### Database
 
-* PostgreSQL
+* Neon PostgreSQL
 
 ### Artificial Intelligence & Data Science
 
@@ -100,7 +116,7 @@ User berinteraksi melalui aplikasi Frontend React.js yang terhubung ke Backend N
 
 ## Data Science Implementation
 
-Project ini mengimplementasikan Machine Learning untuk melakukan klasifikasi kategori transaksi secara otomatis berdasarkan deskripsi transaksi yang dimasukkan oleh pengguna.
+This project implements Machine Learning to automatically classify transaction categories based on transaction descriptions entered by users.
 
 ### AI Workflow
 
@@ -117,7 +133,7 @@ TensorFlow/Keras Model
     ↓
 Predicted Category
     ↓
-PostgreSQL Database
+Neon PostgreSQL Database
 ```
 
 ### Supported Categories
@@ -170,38 +186,34 @@ capstone-project/
 
 ## Installation
 
-### 1. Clone Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/Rohbaik10/capstone-project.git
 ```
 
-### 2. Install Frontend Dependencies
+### Install Frontend Dependencies
 
 ```bash
 cd frontend
 npm install
 ```
 
-### 3. Install Backend Dependencies
+### Install Backend Dependencies
 
 ```bash
 cd ../backend
 npm install
 ```
 
-### 4. Configure Environment Variables
+---
 
-Buat file `.env` pada backend dan sesuaikan konfigurasi PostgreSQL serta kebutuhan aplikasi.
+## Environment Variables
 
-Contoh:
+Create a `.env` file inside the backend directory:
 
 ```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=your_password
-DB_NAME=smart_financial
+DATABASE_URL=your_neon_database_url
 JWT_SECRET=your_secret_key
 ```
 
@@ -216,20 +228,20 @@ cd backend/ai-service
 python app.py
 ```
 
-AI Service berjalan pada:
+AI Service:
 
 ```text
 http://localhost:5001
 ```
 
-### Run Backend Server
+### Run Backend
 
 ```bash
 cd backend
 npm run dev
 ```
 
-Backend berjalan pada:
+Backend:
 
 ```text
 http://localhost:5000
@@ -242,11 +254,21 @@ cd frontend
 npm run dev
 ```
 
-Frontend berjalan pada:
+Frontend:
 
 ```text
 http://localhost:5173
 ```
+
+---
+
+## Deployment
+
+| Service  | Platform        |
+| -------- | --------------- |
+| Frontend | Vercel          |
+| Backend  | Railway         |
+| Database | Neon PostgreSQL |
 
 ---
 
@@ -260,11 +282,9 @@ Coding Camp 2026 Capstone Project
 
 ## Release
 
-Current Stable Version: **v1.0**
+Current Stable Version:
 
-Git Tag:
-
-```bash
+```text
 v1.0
 ```
 
