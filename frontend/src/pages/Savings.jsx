@@ -4,7 +4,7 @@ import {
   useState,
 } from "react";
 
-import axios from "axios";
+import api from "../services/api";
 
 function Savings() {
 
@@ -52,10 +52,10 @@ function Savings() {
     try {
 
       const response =
-        await axios.get(
-          `http://localhost:5000/api/savings/${user.id}`
-        );
-
+      await api.get(
+  `/savings/${user.id}`
+);
+  
       if (
         response.data.length > 0
       ) {
@@ -85,10 +85,9 @@ function Savings() {
     try {
 
       const response =
-        await axios.get(
-          `http://localhost:5000/api/savings/history/${user.id}`
-        );
-
+       await api.get(
+  `/savings/history/${user.id}`
+);
       setHistory(
         response.data
       );
@@ -138,33 +137,24 @@ function Savings() {
       /* BELUM ADA TARGET */
       if (!savingData) {
 
-        await axios.post(
-          "http://localhost:5000/api/savings",
-          {
-            user_id:
-              Number(user.id),
-
-            target:
-              Number(
-                targetInput
-              ),
-          }
-        );
-
+       await api.post(
+  "/savings",
+  {
+    user_id: Number(user.id),
+    target: Number(targetInput),
+  }
+);
       }
 
       /* UPDATE TARGET */
       else {
 
-        await axios.put(
-          `http://localhost:5000/api/savings/${savingData.id}`,
-          {
-            target:
-              Number(
-                targetInput
-              ),
-          }
-        );
+       await api.put(
+  `/savings/${savingData.id}`,
+  {
+    target: Number(targetInput),
+  }
+);
 
       }
 
@@ -199,17 +189,13 @@ function Savings() {
       if (!nominal)
         return;
 
-      await axios.put(
-        `http://localhost:5000/api/savings/${savingData.id}`,
-        {
-          tipe: "setor",
-
-          jumlah:
-            Number(
-              nominal
-            ),
-        }
-      );
+     await api.put(
+  `/savings/${savingData.id}`,
+  {
+    tipe: "setor",
+    jumlah: Number(nominal),
+  }
+);
 
       setNominal("");
 
@@ -243,18 +229,13 @@ function Savings() {
       if (!nominal)
         return;
 
-      await axios.put(
-        `http://localhost:5000/api/savings/${savingData.id}`,
-        {
-          tipe: "tarik",
-
-          jumlah:
-            Number(
-              nominal
-            ),
-        }
-      );
-
+     await api.put(
+  `/savings/${savingData.id}`,
+  {
+    tipe: "tarik",
+    jumlah: Number(nominal),
+  }
+);
       setNominal("");
 
       fetchSaving();
