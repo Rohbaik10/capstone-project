@@ -3,6 +3,8 @@ import {
   useState,
 } from "react";
 
+import api from "../services/api";
+
 function Settings({
   setPage,
   user,
@@ -47,18 +49,22 @@ function Settings({
   /* =========================
      SAVE PROFILE
   ========================= */
-  function handleSave() {
+ async function handleSave() {
 
-    const updatedUser = {
+  try {
 
-      ...user,
+    const response =
+      await api.put(
+        `/auth/profile/${user.id}`,
+        {
+          name: nama,
+          email: email,
+          phone: phone,
+        }
+      );
 
-      name: nama,
-      email: email,
-      phone: phone,
-      photo: foto,
-
-    };
+    const updatedUser =
+      response.data.user;
 
     localStorage.setItem(
       "user",
@@ -67,13 +73,25 @@ function Settings({
       )
     );
 
-    setUser(updatedUser);
+    setUser(
+      updatedUser
+    );
 
     alert(
       "Perubahan berhasil disimpan"
     );
 
+  } catch (error) {
+
+    console.log(error);
+
+    alert(
+      "Gagal menyimpan perubahan"
+    );
+
   }
+
+}
 
   /* =========================
      LOGOUT

@@ -120,7 +120,63 @@ const login = async (req, res) => {
   }
 };
 
+/* UPDATE PROFILE */
+const updateProfile = async (
+  req,
+  res
+) => {
+
+  try {
+
+    const { id } =
+      req.params;
+
+    const {
+      name,
+      email,
+      phone,
+    } = req.body;
+
+    const result =
+      await pool.query(
+        `
+        UPDATE users
+        SET
+          name = $1,
+          email = $2,
+          phone = $3
+        WHERE id = $4
+        RETURNING *
+        `,
+        [
+          name,
+          email,
+          phone,
+          id,
+        ]
+      );
+
+    res.json({
+      message:
+        "Profile berhasil diperbarui",
+      user:
+        result.rows[0],
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      error:
+        "Gagal update profile",
+    });
+
+  }
+};
+
 module.exports = {
   register,
   login,
+  updateProfile,
 };
