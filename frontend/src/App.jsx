@@ -47,7 +47,19 @@ function App() {
      PAGE STATE
   ========================= */
   const [page, setPage] =
-    useState("home");
+  useState(
+    localStorage.getItem("page")
+      || "home"
+  );
+
+  useEffect(() => {
+
+  localStorage.setItem(
+    "page",
+    page
+  );
+
+}, [page]);
 
   /* =========================
      LOAD TRANSACTIONS

@@ -506,18 +506,27 @@ function Savings() {
                   }}
                 >
 
-                  <strong>
-                    {
-                      item.tipe
-                    }
-                  </strong>
+<strong
+  style={{
+    color:
+      item.type === "setor"
+        ? "#16a34a"
+        : "#dc2626",
+    fontSize: "14px",
+  }}
+>
+  {item.type === "setor"
+    ? "📈 SETOR"
+    : "📉 TARIK"}
+</strong>
 
-                  <p>
-                    Rp{" "}
-                    {formatRupiah(
-                      item.jumlah
-                    )}
-                  </p>
+<p
+  style={{
+    marginTop: "5px",
+  }}
+>
+  Rp {formatRupiah(item.jumlah)}
+</p>
 
                 </div>
 
