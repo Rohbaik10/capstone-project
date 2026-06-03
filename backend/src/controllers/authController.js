@@ -40,7 +40,9 @@ const register = async (req, res) => {
       message: "Register berhasil",
       user: result.rows[0],
     });
+
   } catch (error) {
+
     console.error("REGISTER ERROR:");
     console.error(error);
 
@@ -48,12 +50,15 @@ const register = async (req, res) => {
       error: error.message,
       detail: error.detail || null,
     });
+
   }
 };
 
 /* LOGIN */
 const login = async (req, res) => {
+
   try {
+
     const {
       email,
       password,
@@ -68,24 +73,42 @@ const login = async (req, res) => {
     );
 
     if (result.rows.length === 0) {
+
       return res.status(404).json({
         error: "Email tidak ditemukan",
       });
+
     }
 
     const user = result.rows[0];
 
     if (user.password !== password) {
+
       return res.status(401).json({
         error: "Password salah",
       });
+
     }
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
 
     res.json({
       message: "Login berhasil",
+      token,
       user,
     });
+
   } catch (error) {
+
     console.error("LOGIN ERROR:");
     console.error(error);
 
@@ -93,6 +116,7 @@ const login = async (req, res) => {
       error: error.message,
       detail: error.detail || null,
     });
+
   }
 };
 

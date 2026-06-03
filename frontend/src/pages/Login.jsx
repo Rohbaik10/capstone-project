@@ -45,6 +45,12 @@ function Login({
           }
         );
 
+        console.log("FULL RESPONSE:");
+console.log(response.data);
+
+console.log("TOKEN:");
+console.log(response.data.token);
+
       console.log(
         "USER LOGIN:",
         response.data.user
@@ -54,32 +60,38 @@ function Login({
         response.data.message
       );
 
-      /* HAPUS SESSION LAMA */
-      localStorage.removeItem(
-        "token"
-      );
+     /* HAPUS SESSION LAMA */
+localStorage.removeItem(
+  "token"
+);
 
-      localStorage.removeItem(
-        "user"
-      );
+localStorage.removeItem(
+  "user"
+);
 
-      /* SIMPAN USER BARU */
-      localStorage.setItem(
-        "user",
-        JSON.stringify(
-          response.data.user
-        )
-      );
+/* SIMPAN TOKEN JWT */
+localStorage.setItem(
+  "token",
+  response.data.token
+);
 
-      /* UPDATE STATE REACT */
-      setUser(
-        response.data.user
-      );
+/* SIMPAN USER */
+localStorage.setItem(
+  "user",
+  JSON.stringify(
+    response.data.user
+  )
+);
 
-      /* PINDAH HALAMAN */
-      setPage(
-        "dashboard"
-      );
+/* UPDATE STATE REACT */
+setUser(
+  response.data.user
+);
+
+/* PINDAH HALAMAN */
+setPage(
+  "dashboard"
+);
 
     } catch (error) {
 
